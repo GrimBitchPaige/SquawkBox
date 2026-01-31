@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://e4j8dm1ug335"]
+
+[ext_resource type="Script" uid="uid://cpe8upq6v8m5b" path="res://addons/squawkbox/squakdock.gd" id="1_e8pe8"]
+[ext_resource type="Texture2D" uid="uid://sjd1dnxa5dl" path="res://addons/squawkbox/edit_icon.svg" id="2_1k12t"]
+
+[node name="SquawkDock" type="Control" unique_id=686554989]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_e8pe8")
+
+[node name="GraphEdit" type="GraphEdit" parent="." unique_id=1725403020]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+right_disconnects = true
+show_zoom_label = true
+
+[node name="TopHBox" type="HBoxContainer" parent="GraphEdit" unique_id=186083042]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -209.0
+offset_right = 558.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="HBoxLeft" type="HBoxContainer" parent="GraphEdit/TopHBox" unique_id=511378108]
+layout_mode = 2
+
+[node name="ImportBtn" type="Button" parent="GraphEdit/TopHBox/HBoxLeft" unique_id=774743419]
+layout_mode = 2
+text = "Import"
+
+[node name="ExportBtn" type="Button" parent="GraphEdit/TopHBox/HBoxLeft" unique_id=2133171868]
+layout_mode = 2
+text = "Export"
+
+[node name="SceneName" type="Label" parent="GraphEdit/TopHBox/HBoxLeft" unique_id=1326635312]
+layout_mode = 2
+text = "Placeholder Scene Name"
+
+[node name="EditSceneNameBtn" type="TextureButton" parent="GraphEdit/TopHBox/HBoxLeft" unique_id=657352874]
+modulate = Color(0.8627451, 0.8627451, 0.8627451, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_1k12t")
+
+[node name="HBoxRight" type="HBoxContainer" parent="GraphEdit/TopHBox" unique_id=1708774601]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="NewSceneBtn" type="Button" parent="GraphEdit/TopHBox/HBoxRight" unique_id=1791844380]
+layout_mode = 2
+text = "New Scene"
+
+[node name="EditSceneNamePopup" type="Control" parent="GraphEdit" unique_id=1240192925]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -236.0
+offset_top = 43.0
+offset_right = 224.0
+offset_bottom = 124.0
+grow_horizontal = 2
+
+[node name="EditSceneNamePanel" type="Panel" parent="GraphEdit/EditSceneNamePopup" unique_id=575984142]
+layout_mode = 0
+offset_right = 460.0
+offset_bottom = 81.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GraphEdit/EditSceneNamePopup" unique_id=1538712965]
+layout_mode = 0
+offset_right = 459.0
+offset_bottom = 78.0
+
+[node name="SceneNameEdit" type="LineEdit" parent="GraphEdit/EditSceneNamePopup/VBoxContainer" unique_id=1765471526]
+layout_mode = 2
+placeholder_text = "Enter Scene Name"
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GraphEdit/EditSceneNamePopup/VBoxContainer" unique_id=1338445136]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AcceptSceneNameBtn" type="Button" parent="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer" unique_id=1439436493]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accept"
+
+[node name="CloseSceneNameBtn" type="Button" parent="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer" unique_id=1288818435]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+
+[node name="PopupMenu" type="PopupMenu" parent="." unique_id=1593753220]
+oversampling_override = 1.0
+size = Vector2i(117, 100)
+mouse_passthrough_polygon = PackedVector2Array(0, 0, 117, 0, 117, 100, 0, 100)
+item_count = 1
+item_0/text = "Add Node"
+item_0/id = 0
+
+[connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/EditSceneNameBtn" to="." method="_on_edit_scene_name_btn_pressed"]
+[connection signal="text_submitted" from="GraphEdit/EditSceneNamePopup/VBoxContainer/SceneNameEdit" to="." method="_on_scene_name_edit_text_submitted"]
+[connection signal="pressed" from="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/AcceptSceneNameBtn" to="." method="_on_accept_scene_name_btn_pressed"]
+[connection signal="pressed" from="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/CloseSceneNameBtn" to="." method="_on_close_scene_name_btn_pressed"]
+[connection signal="id_pressed" from="PopupMenu" to="." method="_on_popup_menu_id_pressed"]
