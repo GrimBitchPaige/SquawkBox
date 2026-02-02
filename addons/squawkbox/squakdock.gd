@@ -25,6 +25,8 @@ var character_portraits = {
 	"Sappho": "res://addons/squawkbox/Lesbian_pride_flag_2018.svg",
 	"Helena": "res://addons/squawkbox/default_character_portrait.png"
 }
+var dialogue_nodes : Array[Node]
+var temp_json_save_str : String
 
 func _ready() -> void:
 	edit_btn.set_modulate(Color.GAINSBORO)
@@ -47,27 +49,36 @@ func _gui_input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 			print('left mouse')
 
+func nodes_to_json() -> void:
+	var export_dict : Dictionary = {"SceneName":scene_name.text}
+	var data_dict : Dictionary
+	for node in dialogue_nodes:
+		data_dict.merge(node.get_data_dict())
+	export_dict["data"] = data_dict
+	temp_json_save_str = JSON.stringify(export_dict, "\t", false)
+
+func json_to_nodes() -> void:
+	var tmp_dict = JSON.parse_string(temp_json_save_str)
+	scene_name.text = tmp_dict["SceneName"]
+	for key in tmp_dict["data"]:
+		var temp = dialogue_node.instantiate()
+		temp.resizable = true
+		temp.call_deferred("add_characters", character_portraits)
+		temp.call_deferred("load_node_data", tmp_dict["data"][key], key)
+		dialogue_nodes.append(temp)
+		graph.add_child(temp)
 
 func _on_popup_menu_id_pressed(id: int) -> void:
 	if id == 0:
 		print('add node clicked')
 		var temp = dialogue_node.instantiate()
 		var add_position : Vector2 = graph.get_local_mouse_position()
-		#var slot_label : Label = Label.new()
-		#var slot_label_2 : Label = Label.new()
-		#slot_label.text = 'Dialogue goes here'
-		#slot_label_2.text = 'Reply option 1'
-		#temp.add_child(slot_label)
-		#temp.add_child(slot_label_2)
 		
 		temp.position_offset = (add_position + graph.scroll_offset) / graph.zoom
-		#temp.size = Vector2(100.0, 100.0)
 		temp.resizable = true
-		#temp.set_slot(0, true, 1, Color.BLACK, true, 1, Color.AQUAMARINE, null, null, false)
-		#temp.set_slot(1, true, 1, Color.AQUAMARINE, true, 1, Color.BLACK, null, null, false)
-		
-		#temp.instantiate()
 		temp.call_deferred("add_characters", character_portraits)
+		temp.call_deferred("generate_uuid")
+		dialogue_nodes.append(temp)
 		graph.add_child(temp)
 
 
@@ -97,3 +108,11 @@ func _on_scene_name_edit_text_submitted(new_text: String) -> void:
 	scene_name.text = sn_edit_box.text
 	sn_edit_popup.hide()
 	sn_edit_box.clear()
+
+
+func _on_export_btn_pressed() -> void:
+	nodes_to_json()
+
+
+func _on_import_btn_pressed() -> void:
+	json_to_nodes()
