@@ -2,6 +2,8 @@
 
 extends GraphNode
 
+signal node_delete(node_number)
+
 @onready var close_btn : TextureButton = $HBoxContainer/DeleteNodeBtn
 @onready var character_list : OptionButton = $HBoxContainer/CharacterSelect
 @onready var character_portrait : TextureRect = $HBoxContainer/CharacterPortrait
@@ -11,6 +13,7 @@ var character_dict : Dictionary
 var reply_btns : Array
 var reply_vars_list : Array[Node]
 var node_id : String
+var node_number : int
 var current_portrait
 
 var reply_var_list_ui : PackedScene = preload("res://addons/squawkbox/reply_variables_list.tscn")
@@ -20,6 +23,7 @@ func _enter_tree() -> void:
 	pass
 
 func _on_delete_node_btn_pressed() -> void:
+	node_delete.emit(node_number)
 	queue_free()
 
 func add_characters(characters: Dictionary) -> void:
@@ -115,3 +119,9 @@ func load_node_data(input_data: Dictionary, id: String) -> void:
 	character_portrait.texture = portrait_texture
 	node_id = id
 	position_offset = Vector2(input_data["PositionX"], input_data["PositionY"])
+
+func get_node_number() -> int:
+	return node_number
+	
+func set_node_number(nn: int) -> void:
+	node_number = nn

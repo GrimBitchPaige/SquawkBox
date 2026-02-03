@@ -7,6 +7,7 @@ extends Control
 @onready var graph : GraphEdit = $GraphEdit
 @onready var edit_btn : TextureButton = $GraphEdit/TopHBox/HBoxLeft/EditSceneNameBtn
 @onready var scene_name : Label = $GraphEdit/TopHBox/HBoxLeft/SceneName
+@onready var export_dialogue : FileDialog = $ExportDialogue
 
 #region SceneNameEditPanel
 @onready var sn_edit_popup : Control = $GraphEdit/EditSceneNamePopup
@@ -50,10 +51,14 @@ func _gui_input(event: InputEvent) -> void:
 			print('left mouse')
 
 func nodes_to_json() -> void:
+	temp_json_save_str = ''
 	var export_dict : Dictionary = {"SceneName":scene_name.text}
 	var data_dict : Dictionary
 	for node in dialogue_nodes:
-		data_dict.merge(node.get_data_dict())
+		if data_dict.is_empty():
+			data_dict = node.get_data_dict()
+		else:
+			data_dict.merge(node.get_data_dict())
 	export_dict["data"] = data_dict
 	temp_json_save_str = JSON.stringify(export_dict, "\t", false)
 
@@ -65,7 +70,9 @@ func json_to_nodes() -> void:
 		temp.resizable = true
 		temp.call_deferred("add_characters", character_portraits)
 		temp.call_deferred("load_node_data", tmp_dict["data"][key], key)
+		temp.node_delete.connect(_on_node_deleted)
 		dialogue_nodes.append(temp)
+		temp.call_deferred("set_node_number", (dialogue_nodes.size() - 1))
 		graph.add_child(temp)
 
 func _on_popup_menu_id_pressed(id: int) -> void:
@@ -78,7 +85,9 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 		temp.resizable = true
 		temp.call_deferred("add_characters", character_portraits)
 		temp.call_deferred("generate_uuid")
+		temp.node_delete.connect(_on_node_deleted)
 		dialogue_nodes.append(temp)
+		temp.call_deferred("set_node_number", (dialogue_nodes.size() - 1))
 		graph.add_child(temp)
 
 
@@ -111,8 +120,21 @@ func _on_scene_name_edit_text_submitted(new_text: String) -> void:
 
 
 func _on_export_btn_pressed() -> void:
+	var test1 : Dictionary = {"test":"moveit"}
+	var test2 : Dictionary
+	test2.merge(test1)
 	nodes_to_json()
+	export_dialogue.current_file = scene_name.text + ".json"
+	export_dialogue.popup_file_dialog()
 
 
 func _on_import_btn_pressed() -> void:
 	json_to_nodes()
+
+func _on_node_deleted(nn: int) -> void:
+	dialogue_nodes.remove_at(nn)
+	# need to reset node numbers of other nodes now
+	var i : int = 0
+	for d_node in dialogue_nodes:
+		d_node.set_node_number(i)
+		i += 1
