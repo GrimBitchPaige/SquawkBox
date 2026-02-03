@@ -120,9 +120,6 @@ func _on_scene_name_edit_text_submitted(new_text: String) -> void:
 
 
 func _on_export_btn_pressed() -> void:
-	var test1 : Dictionary = {"test":"moveit"}
-	var test2 : Dictionary
-	test2.merge(test1)
 	nodes_to_json()
 	export_dialogue.current_file = scene_name.text + ".json"
 	export_dialogue.popup_file_dialog()
@@ -138,3 +135,14 @@ func _on_node_deleted(nn: int) -> void:
 	for d_node in dialogue_nodes:
 		d_node.set_node_number(i)
 		i += 1
+
+
+func _on_export_dialogue_file_selected(path: String) -> void:
+	print(path)
+	var save_file : FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	save_file.store_string(temp_json_save_str)
+	save_file.close()
+
+
+func _on_new_scene_btn_pressed() -> void:
+	pass # Replace with function body.
