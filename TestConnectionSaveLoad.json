@@ -1,0 +1,117 @@
+{
+	"SceneName": "TestConnectionSaveLoad",
+	"data": {
+		"21345730535804137706": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 140.0,
+			"PositionY": 80.0,
+			"Dialogue": "Would you like eggs, waffles or french toast?",
+			"ReplyOptions": {
+
+			}
+		},
+		"30886269885811557940": {
+			"Character": "Player",
+			"Portrait": "res://addons/squawkbox/player.png",
+			"PositionX": 700.0,
+			"PositionY": 40.0,
+			"Dialogue": "",
+			"ReplyOptions": {
+				"0": {
+					"label": "Reply 1:",
+					"text": "I'll take the french toast please"
+				},
+				"1": {
+					"label": "Reply 2:",
+					"text": "I think I'll have eggs, thanks"
+				},
+				"2": {
+					"label": "Reply 3:",
+					"text": "Definitely waffles"
+				},
+				"3": {
+					"label": "Reply 4:",
+					"text": "I'm not hungry, sorry"
+				}
+			}
+		},
+		"93120779318473404925": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 1300.0,
+			"PositionY": -60.0,
+			"Dialogue": "Excellent, french toast coming right up!",
+			"ReplyOptions": {
+
+			}
+		},
+		"68476396437338491300": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 1280.0,
+			"PositionY": 180.0,
+			"Dialogue": "We'll get your eggs right away!",
+			"ReplyOptions": {
+
+			}
+		},
+		"39733635434584013667": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 1300.0,
+			"PositionY": 420.0,
+			"Dialogue": "Waffles are a great choice, they're my favorite here!",
+			"ReplyOptions": {
+
+			}
+		},
+		"00443361670552502443": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 1280.0,
+			"PositionY": 640.0,
+			"Dialogue": "no food for you right now, got it!",
+			"ReplyOptions": {
+
+			}
+		}
+	},
+	"connections": {
+		"Connection_1": {
+			"from_node": "21345730535804137706",
+			"from_port": 0,
+			"to_node": "30886269885811557940",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_2": {
+			"from_node": "30886269885811557940",
+			"from_port": 1,
+			"to_node": "93120779318473404925",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_3": {
+			"from_node": "30886269885811557940",
+			"from_port": 2,
+			"to_node": "68476396437338491300",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_4": {
+			"from_node": "30886269885811557940",
+			"from_port": 3,
+			"to_node": "39733635434584013667",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_5": {
+			"from_node": "30886269885811557940",
+			"from_port": 4,
+			"to_node": "00443361670552502443",
+			"to_port": 0,
+			"keep_alive": false
+		}
+	}
+}

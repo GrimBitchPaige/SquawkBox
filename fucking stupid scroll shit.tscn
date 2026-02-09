@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://j2rq0rrwc6a3"]
+
+[node name="Control" type="Control" unique_id=2038579777]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 150.0
+
+[node name="Panel" type="Panel" parent="." unique_id=1020236196]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1964494377]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+draw_focus_border = true
+scroll_hint_mode = 1
+
+[node name="ItemList" type="ItemList" parent="ScrollContainer" unique_id=904664153]
+layout_mode = 2
+auto_width = true
+auto_height = true
+item_count = 4
+item_0/text = "Test"
+item_1/text = "Test2"
+item_2/text = "Test3"
+item_3/text = "test4"

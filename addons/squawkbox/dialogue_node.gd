@@ -3,10 +3,13 @@
 extends GraphNode
 
 signal node_delete(node_number)
+signal node_setup_complete
 
 @onready var close_btn : TextureButton = $HBoxContainer/DeleteNodeBtn
 @onready var character_list : OptionButton = $HBoxContainer/CharacterSelect
 @onready var character_portrait : TextureRect = $HBoxContainer/CharacterPortrait
+@onready var dialogue : TextEdit = $HBoxContainer2/TextEdit
+@onready var id_lbl : Label = $HBoxContainer/Panel/IDLbl
 
 var reply_count : int = 0
 var character_dict : Dictionary
@@ -20,7 +23,7 @@ var reply_var_list_ui : PackedScene = preload("res://addons/squawkbox/reply_vari
 
 
 func _enter_tree() -> void:
-	pass
+	print('node %s entered tree' % node_id)
 
 func _on_delete_node_btn_pressed() -> void:
 	node_delete.emit(node_number)
@@ -47,8 +50,10 @@ func _on_add_reply_option_btn_pressed() -> void:
 	reply_vars_btn.pressed.connect(_on_reply_vars_btn_pressed.bind(reply_count - 1))
 	var reply_label : Label = Label.new()
 	reply_label.text = 'Reply %d:' % reply_count
+	reply_label.name = 'ReplyLbl'
 	var reply_text : TextEdit = TextEdit.new()
 	reply_text.placeholder_text = 'Enter reply text here'
+	reply_text.name = 'ReplyText'
 	reply_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	reply_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	reply_text.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
@@ -97,6 +102,9 @@ func _on_reply_vars_btn_pressed(btn_num: int) -> void:
 func generate_uuid() -> void:
 	for i in range(0,20):
 		node_id += str(randi_range(0,9))
+	name = node_id
+	id_lbl.text = node_id.substr(0, 6)
+	print('set node name %s' % node_id)
 
 func get_data_dict() -> Dictionary:
 	var return_dict : Dictionary = {}
@@ -106,6 +114,8 @@ func get_data_dict() -> Dictionary:
 	data_dict["Portrait"] = current_portrait
 	data_dict["PositionX"] = position_offset.x
 	data_dict["PositionY"] = position_offset.y
+	data_dict["Dialogue"] = dialogue.text
+	data_dict["ReplyOptions"] = get_slots()
 	
 	return_dict[node_id] = data_dict
 	
@@ -118,10 +128,71 @@ func load_node_data(input_data: Dictionary, id: String) -> void:
 	current_portrait = input_data["Portrait"]
 	character_portrait.texture = portrait_texture
 	node_id = id
+	name = id
+	for i in range(0, character_list.item_count):
+		if character_list.get_item_text(i) == title:
+			character_list.select(i)
+	id_lbl.text = id.substr(0, 6)
 	position_offset = Vector2(input_data["PositionX"], input_data["PositionY"])
+	dialogue.text = input_data["Dialogue"]
+	set_slots(input_data["ReplyOptions"])
 
 func get_node_number() -> int:
 	return node_number
 	
 func set_node_number(nn: int) -> void:
 	node_number = nn
+	print('node number set')
+	node_setup_complete.emit()
+
+func get_slots() -> Dictionary:
+	var output_dict : Dictionary
+	
+	var i = 0
+	for reply in reply_btns:
+		var tmp_dict : Dictionary
+		tmp_dict["label"] = reply_btns[i].get_node('ReplyLbl').text
+		tmp_dict["text"] = reply_btns[i].get_node('ReplyText').text
+		output_dict[str(i)] = tmp_dict
+		i += 1
+	print(output_dict)
+	return output_dict
+
+func set_slots(slots: Dictionary) -> void:
+	var i = 0
+	for key in slots:
+		var added_slot_num : int = get_child_count(false)
+		reply_count += 1
+		var reply_del_btn : Button = Button.new()
+		reply_del_btn.text = 'del'
+		reply_del_btn.pressed.connect(_on_reply_del_btn_pressed.bind(reply_count - 1))
+		var reply_vars_btn : Button = Button.new()
+		reply_vars_btn.text = 'vars'
+		reply_vars_btn.pressed.connect(_on_reply_vars_btn_pressed.bind(reply_count - 1))
+		var reply_label : Label = Label.new()
+		reply_label.text = slots[key]['label']
+		reply_label.name = 'ReplyLbl'
+		var reply_text : TextEdit = TextEdit.new()
+		reply_text.placeholder_text = 'Enter reply text here'
+		reply_text.text = slots[key]['text']
+		reply_text.name = 'ReplyText'
+		reply_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		reply_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		reply_text.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+		reply_text.scroll_fit_content_height = true
+		var reply_hbox : HBoxContainer = HBoxContainer.new()
+		reply_hbox.custom_minimum_size.y = 50.0
+		reply_hbox.add_child(reply_del_btn)
+		reply_hbox.add_child(reply_vars_btn)
+		reply_hbox.add_child(reply_label)
+		reply_hbox.add_child(reply_text)
+		var tmp = reply_hbox
+		reply_btns.append(tmp)
+		var reply_vars_edit : Node = reply_var_list_ui.instantiate()
+		reply_vars_edit.visible = false
+		reply_vars_edit.call_deferred("set_label", 'Reply %d' % reply_count)
+		reply_vars_list.append(reply_vars_edit)
+		reply_hbox.add_child(reply_vars_edit)
+		add_child(reply_hbox)
+		set_slot(added_slot_num, false, 0, Color.ALICE_BLUE, true, 0, Color.ALICE_BLUE, null, null, true)
+		

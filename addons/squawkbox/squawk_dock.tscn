@@ -55,6 +55,10 @@ modulate = Color(0.8627451, 0.8627451, 0.8627451, 1)
 layout_mode = 2
 texture_normal = ExtResource("2_1k12t")
 
+[node name="UnsavedChangesInd" type="Label" parent="GraphEdit/TopHBox/HBoxLeft" unique_id=177985029]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
 [node name="HBoxRight" type="HBoxContainer" parent="GraphEdit/TopHBox" unique_id=1708774601]
 layout_mode = 2
 size_flags_horizontal = 10
@@ -62,6 +66,10 @@ size_flags_horizontal = 10
 [node name="NewSceneBtn" type="Button" parent="GraphEdit/TopHBox/HBoxRight" unique_id=1791844380]
 layout_mode = 2
 text = "New Scene"
+
+[node name="TestConnections" type="Button" parent="GraphEdit/TopHBox/HBoxRight" unique_id=43119886]
+layout_mode = 2
+text = "Test connections"
 
 [node name="EditSceneNamePopup" type="Control" parent="GraphEdit" unique_id=1240192925]
 visible = false
@@ -105,7 +113,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Close"
 
-[node name="PopupMenu" type="PopupMenu" parent="." unique_id=1593753220]
+[node name="AddNode" type="PopupMenu" parent="." unique_id=1593753220]
 oversampling_override = 1.0
 size = Vector2i(117, 100)
 mouse_passthrough_polygon = PackedVector2Array(0, 0, 117, 0, 117, 100, 0, 100)
@@ -115,14 +123,31 @@ item_0/id = 0
 
 [node name="ExportDialogue" type="FileDialog" parent="." unique_id=894276220]
 
+[node name="ImportDialogue" type="FileDialog" parent="." unique_id=1380798822]
+title = "Open a File"
+file_mode = 0
+
+[node name="UnsavedChanges" type="ConfirmationDialog" parent="." unique_id=2002534877]
+ok_button_text = "Don't Save"
+dialog_text = "You have unsaved changes. Save before creating new scene?"
+
+[node name="ImportUnsavedChangesConfirmation" type="ConfirmationDialog" parent="." unique_id=1803220915]
+dialog_text = "You have unsaved changes, discard changes and load scene?"
+
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="connection_to_empty" from="GraphEdit" to="." method="_on_graph_edit_connection_to_empty"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/ImportBtn" to="." method="_on_import_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/ExportBtn" to="." method="_on_export_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/EditSceneNameBtn" to="." method="_on_edit_scene_name_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxRight/NewSceneBtn" to="." method="_on_new_scene_btn_pressed"]
+[connection signal="pressed" from="GraphEdit/TopHBox/HBoxRight/TestConnections" to="." method="_on_test_connections_pressed"]
+[connection signal="visibility_changed" from="GraphEdit/EditSceneNamePopup" to="." method="_on_edit_scene_name_popup_visibility_changed"]
 [connection signal="text_submitted" from="GraphEdit/EditSceneNamePopup/VBoxContainer/SceneNameEdit" to="." method="_on_scene_name_edit_text_submitted"]
 [connection signal="pressed" from="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/AcceptSceneNameBtn" to="." method="_on_accept_scene_name_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/CloseSceneNameBtn" to="." method="_on_close_scene_name_btn_pressed"]
-[connection signal="id_pressed" from="PopupMenu" to="." method="_on_popup_menu_id_pressed"]
+[connection signal="id_pressed" from="AddNode" to="." method="_on_popup_menu_id_pressed"]
 [connection signal="file_selected" from="ExportDialogue" to="." method="_on_export_dialogue_file_selected"]
+[connection signal="file_selected" from="ImportDialogue" to="." method="_on_import_dialogue_file_selected"]
+[connection signal="confirmed" from="UnsavedChanges" to="." method="_on_unsaved_changes_confirmed"]
+[connection signal="confirmed" from="ImportUnsavedChangesConfirmation" to="." method="_on_import_unsaved_changes_confirmation_confirmed"]

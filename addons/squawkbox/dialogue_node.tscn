@@ -51,6 +51,11 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="IDLbl" type="Label" parent="HBoxContainer/Panel" unique_id=1868822653]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="DeleteNodeBtn" type="TextureButton" parent="HBoxContainer" unique_id=444815245]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
