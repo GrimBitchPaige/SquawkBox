@@ -71,7 +71,34 @@
 			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
 			"PositionX": 1280.0,
 			"PositionY": 640.0,
-			"Dialogue": "no food for you right now, got it!",
+			"Dialogue": "no food for you right now, got it!\nCan I get you a drink then?",
+			"ReplyOptions": {
+
+			}
+		},
+		"91269218547977836836": {
+			"Character": "Player",
+			"Portrait": "res://addons/squawkbox/player.png",
+			"PositionX": 1840.0,
+			"PositionY": 680.0,
+			"Dialogue": "",
+			"ReplyOptions": {
+				"0": {
+					"label": "Reply 1:",
+					"text": "Sure, I'll have orange juice."
+				},
+				"1": {
+					"label": "Reply 2:",
+					"text": "Just some coffee please."
+				}
+			}
+		},
+		"85301955624713204035": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 2380.0,
+			"PositionY": 620.0,
+			"Dialogue": "Sure, coming right up!",
 			"ReplyOptions": {
 
 			}
@@ -110,6 +137,27 @@
 			"from_node": "30886269885811557940",
 			"from_port": 4,
 			"to_node": "00443361670552502443",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_6": {
+			"from_node": "00443361670552502443",
+			"from_port": 0,
+			"to_node": "91269218547977836836",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_7": {
+			"from_node": "91269218547977836836",
+			"from_port": 1,
+			"to_node": "85301955624713204035",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_8": {
+			"from_node": "91269218547977836836",
+			"from_port": 2,
+			"to_node": "85301955624713204035",
 			"to_port": 0,
 			"keep_alive": false
 		}

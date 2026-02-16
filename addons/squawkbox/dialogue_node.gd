@@ -159,7 +159,6 @@ func get_slots() -> Dictionary:
 	return output_dict
 
 func set_slots(slots: Dictionary) -> void:
-	var i = 0
 	for key in slots:
 		var added_slot_num : int = get_child_count(false)
 		reply_count += 1
