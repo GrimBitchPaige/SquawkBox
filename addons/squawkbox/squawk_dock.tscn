@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cpe8upq6v8m5b" path="res://addons/squawkbox/squakdock.gd" id="1_e8pe8"]
 [ext_resource type="Texture2D" uid="uid://sjd1dnxa5dl" path="res://addons/squawkbox/edit_icon.svg" id="2_1k12t"]
+[ext_resource type="PackedScene" uid="uid://d3jcule0d5n2t" path="res://addons/squawkbox/character_manager.tscn" id="3_uo4p7"]
 
 [node name="SquawkDock" type="Control" unique_id=686554989]
 layout_mode = 3
@@ -67,9 +68,9 @@ size_flags_horizontal = 10
 layout_mode = 2
 text = "New Scene"
 
-[node name="TestConnections" type="Button" parent="GraphEdit/TopHBox/HBoxRight" unique_id=43119886]
+[node name="ManageCharactersBtn" type="Button" parent="GraphEdit/TopHBox/HBoxRight" unique_id=43119886]
 layout_mode = 2
-text = "Test connections"
+text = "Manage Characters"
 
 [node name="EditSceneNamePopup" type="Control" parent="GraphEdit" unique_id=1240192925]
 visible = false
@@ -113,6 +114,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Close"
 
+[node name="CharacterManager" parent="." unique_id=804301135 instance=ExtResource("3_uo4p7")]
+visible = false
+layout_mode = 1
+
 [node name="AddNode" type="PopupMenu" parent="." unique_id=1593753220]
 oversampling_override = 1.0
 size = Vector2i(117, 100)
@@ -122,17 +127,25 @@ item_0/text = "Add Node"
 item_0/id = 0
 
 [node name="ExportDialogue" type="FileDialog" parent="." unique_id=894276220]
+initial_position = 4
 
 [node name="ImportDialogue" type="FileDialog" parent="." unique_id=1380798822]
 title = "Open a File"
+initial_position = 4
 file_mode = 0
 
 [node name="UnsavedChanges" type="ConfirmationDialog" parent="." unique_id=2002534877]
+initial_position = 4
 ok_button_text = "Don't Save"
 dialog_text = "You have unsaved changes. Save before creating new scene?"
 
 [node name="ImportUnsavedChangesConfirmation" type="ConfirmationDialog" parent="." unique_id=1803220915]
+initial_position = 4
 dialog_text = "You have unsaved changes, discard changes and load scene?"
+
+[node name="DeleteCharacterRow" type="ConfirmationDialog" parent="." unique_id=1603216868]
+initial_position = 4
+dialog_text = "Delete selected characters?"
 
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="connection_to_empty" from="GraphEdit" to="." method="_on_graph_edit_connection_to_empty"]
@@ -141,7 +154,7 @@ dialog_text = "You have unsaved changes, discard changes and load scene?"
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/ExportBtn" to="." method="_on_export_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxLeft/EditSceneNameBtn" to="." method="_on_edit_scene_name_btn_pressed"]
 [connection signal="pressed" from="GraphEdit/TopHBox/HBoxRight/NewSceneBtn" to="." method="_on_new_scene_btn_pressed"]
-[connection signal="pressed" from="GraphEdit/TopHBox/HBoxRight/TestConnections" to="." method="_on_test_connections_pressed"]
+[connection signal="pressed" from="GraphEdit/TopHBox/HBoxRight/ManageCharactersBtn" to="." method="_on_manage_characters_btn_pressed"]
 [connection signal="visibility_changed" from="GraphEdit/EditSceneNamePopup" to="." method="_on_edit_scene_name_popup_visibility_changed"]
 [connection signal="text_submitted" from="GraphEdit/EditSceneNamePopup/VBoxContainer/SceneNameEdit" to="." method="_on_scene_name_edit_text_submitted"]
 [connection signal="pressed" from="GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/AcceptSceneNameBtn" to="." method="_on_accept_scene_name_btn_pressed"]
@@ -151,3 +164,4 @@ dialog_text = "You have unsaved changes, discard changes and load scene?"
 [connection signal="file_selected" from="ImportDialogue" to="." method="_on_import_dialogue_file_selected"]
 [connection signal="confirmed" from="UnsavedChanges" to="." method="_on_unsaved_changes_confirmed"]
 [connection signal="confirmed" from="ImportUnsavedChangesConfirmation" to="." method="_on_import_unsaved_changes_confirmation_confirmed"]
+[connection signal="confirmed" from="DeleteCharacterRow" to="." method="_on_delete_character_row_confirmed"]

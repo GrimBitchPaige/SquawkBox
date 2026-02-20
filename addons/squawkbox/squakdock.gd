@@ -12,7 +12,7 @@ extends Control
 @onready var import_dialogue : FileDialog = $ImportDialogue
 @onready var import_unsaved_changes : ConfirmationDialog = $ImportUnsavedChangesConfirmation
 @onready var unsaved_changes_ind : Label = $GraphEdit/TopHBox/HBoxLeft/UnsavedChangesInd
-
+@onready var character_manager_dialogue : Node = $CharacterManager
 #region SceneNameEditPanel
 @onready var sn_edit_popup : Control = $GraphEdit/EditSceneNamePopup
 @onready var sn_edit_panel : Panel = $GraphEdit/EditSceneNamePopup/EditSceneNamePanel
@@ -22,14 +22,9 @@ extends Control
 #endregion
 
 var click_pos : Vector2
-var dialogue_node : PackedScene = preload("res://addons/squawkbox/dialogue_node.tscn")
-#TODO replace default test values with system to load characters from file
-var character_list : Array[StringName] = ["Player", "Sapphos", "Helena"]
-var character_portraits = {
-	"Player": "res://addons/squawkbox/player.png",
-	"Sappho": "res://addons/squawkbox/Lesbian_pride_flag_2018.svg",
-	"Helena": "res://addons/squawkbox/default_character_portrait.png"
-}
+const dialogue_node : PackedScene = preload("res://addons/squawkbox/dialogue_node.tscn")
+var character_list : Array[StringName]
+var character_portraits : Dictionary
 var dialogue_nodes : Array[Node]
 var temp_json_save_str : String
 var has_unsaved_changes : bool = false
@@ -44,11 +39,11 @@ func _ready() -> void:
 	unsaved_changes.custom_action.connect(_save_before_new_scene)
 	import_unsaved_changes.add_button("Save and Load", false, "save_and_load")
 	import_unsaved_changes.custom_action.connect(_save_changes_load)
+	character_manager_dialogue.editor_closed.connect(_on_char_editor_closed)
 	#edit_btn.set_modulate(Color.AQUAMARINE)
 
 func _enter_tree() -> void:
 	print('docking')
-
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -135,7 +130,8 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 		
 		temp.position_offset = (add_position + graph.scroll_offset) / graph.zoom
 		temp.resizable = true
-		temp.call_deferred("add_characters", character_portraits)
+		if character_portraits.size() > 0:
+			temp.call_deferred("add_characters", character_portraits)
 		temp.call_deferred("generate_uuid")
 		temp.node_delete.connect(_on_node_deleted)
 		temp.dragged.connect(_on_node_offset_changed)
@@ -267,21 +263,6 @@ func _on_import_unsaved_changes_confirmation_confirmed() -> void:
 	clear_scene()
 	import_dialogue.popup_centered_clamped()
 
-
-func _on_test_connections_pressed() -> void:
-	print(graph.connections)
-	var node_from
-	var node_to
-	var i = 0
-	for d_nodes in dialogue_nodes:
-		d_nodes.get_slots()
-		if i == 0:
-			node_from = d_nodes.name
-		else:
-			node_to = d_nodes.name
-		i += 1
-	#graph.connect_node(node_from, 0, node_to, 0)
-
 func do_something(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	print('something from node {0} from port {1} to node {2} to port {3}'.format([from_node, from_port, to_node, to_port]))
 	graph.connect_node(from_node, from_port, to_node, to_port)
@@ -315,3 +296,17 @@ func _on_node_setup_complete() -> void:
 	if node_loaded_num == dialogue_nodes.size() and is_loading_nodes:
 		load_connections(connections_load_dict)
 		is_loading_nodes = false
+
+
+func _on_manage_characters_btn_pressed() -> void:
+	if character_manager_dialogue.visible:
+		character_manager_dialogue.hide()
+	else:
+		character_manager_dialogue.show()
+
+func _on_char_editor_closed(saved_chars: Dictionary) -> void:
+	if saved_chars.size() > 0:
+		for keys in saved_chars:
+			character_portraits.merge(saved_chars[keys])
+		for char_name in character_portraits.keys():
+			character_list.append(char_name)
