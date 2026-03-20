@@ -1,0 +1,53 @@
+{
+	"node_id": "14239735219055544094",
+	"reply_num": 1,
+	"condition_0": {
+		"token_0": {
+			"op": "player.mana"
+		},
+		"token_1": {
+			"op": "<="
+		},
+		"token_2": {
+			"op": "25"
+		},
+		"token_3": {
+			"op": "THEN"
+		},
+		"token_4": {
+			"op": "HIDDEN"
+		},
+		"token_5": {
+			"op": "END"
+		}
+	},
+	"condition_1": {
+		"token_0": {
+			"op": "quest.mana_consumption"
+		},
+		"token_1": {
+			"op": "IS"
+		},
+		"token_2": {
+			"op": "not complete"
+		},
+		"token_3": {
+			"op": "OR"
+		},
+		"token_4": {
+			"op": "player.mana"
+		},
+		"token_5": {
+			"op": ">="
+		},
+		"token_6": {
+			"op": "50"
+		},
+		"token_7": {
+			"op": "THEN"
+		},
+		"token_8": {
+			"op": "LOCKED"
+		}
+	}
+}

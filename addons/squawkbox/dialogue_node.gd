@@ -4,6 +4,7 @@ extends GraphNode
 
 signal node_delete(node_number)
 signal node_setup_complete
+signal open_condition_builder(title, node_id, reply_number)
 
 @onready var close_btn : TextureButton = $HBoxContainer/DeleteNodeBtn
 @onready var character_list : OptionButton = $HBoxContainer/CharacterSelect
@@ -20,7 +21,7 @@ var node_number : int
 var current_portrait
 
 var reply_var_list_ui : PackedScene = preload("res://addons/squawkbox/reply_variables_list.tscn")
-
+var y_size_hold : float
 
 func _enter_tree() -> void:
 	print('node %s entered tree' % node_id)
@@ -73,6 +74,7 @@ func _on_add_reply_option_btn_pressed() -> void:
 	reply_hbox.add_child(reply_vars_edit)
 	add_child(reply_hbox)
 	set_slot(added_slot_num, false, 0, Color.ALICE_BLUE, true, 0, Color.ALICE_BLUE, null, null, true)
+	y_size_hold = size.y
 	#endregion
 	
 
@@ -93,11 +95,16 @@ func _on_reply_del_btn_pressed(btn_num: int) -> void:
 		reshuffle_count += 1
 
 func _on_reply_vars_btn_pressed(btn_num: int) -> void:
-	if reply_vars_list[btn_num].visible:
-		reply_vars_list[btn_num].visible = false
-	else:
-		#reply_vars_list[btn_num].set_label('Reply %d' % btn_num)
-		reply_vars_list[btn_num].visible = true
+	#if reply_vars_list[btn_num].visible:
+		#reply_vars_list[btn_num].visible = false
+		#size.y = y_size_hold
+	#else:
+		##reply_vars_list[btn_num].set_label('Reply %d' % btn_num)
+		##y_size_hold = size.y
+		#for btn in reply_vars_list:
+			#btn.visible = false
+		#reply_vars_list[btn_num].visible = true
+	open_condition_builder.emit(title, node_id, btn_num)
 
 func generate_uuid() -> void:
 	for i in range(0,20):
@@ -193,5 +200,6 @@ func set_slots(slots: Dictionary) -> void:
 		reply_vars_list.append(reply_vars_edit)
 		reply_hbox.add_child(reply_vars_edit)
 		add_child(reply_hbox)
+		#add_child(reply_vars_edit)
 		set_slot(added_slot_num, false, 0, Color.ALICE_BLUE, true, 0, Color.ALICE_BLUE, null, null, true)
 		

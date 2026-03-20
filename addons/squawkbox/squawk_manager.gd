@@ -49,6 +49,7 @@ func load_scene(scene_name_in: StringName) -> void:
 	current_dialogue_str = FileAccess.get_file_as_string(path)
 	current_dialogue_dict = JSON.parse_string(current_dialogue_str)
 	current_dialogue_box = dialague_box.instantiate()
+	current_dialogue_box.pressed.connect(_on_dbox_btn_pressed)
 	var data_keys = current_dialogue_dict['data'].keys()
 	current_dialogue_node = data_keys[0]
 	get_tree().root.add_child(current_dialogue_box)
@@ -56,7 +57,7 @@ func load_scene(scene_name_in: StringName) -> void:
 	current_dialogue_box.call_deferred("set_dialogue_text", current_dialogue_dict['data'][data_keys[0]]['Dialogue'])
 	current_dialogue_box.call_deferred("create_replies", current_dialogue_dict['data'][data_keys[0]]['ReplyOptions'])
 	current_dialogue_box.reply_chosen.connect(_on_reply_chosen)
-	current_dialogue_box.clicked.connect(_on_clicked)
+	#current_dialogue_box.clicked.connect(_on_clicked)
 	current_dialogue_box.grab_focus()
 
 func next_dialogue(next_dialogue_dict: Dictionary, node_id: String) -> void:
@@ -89,3 +90,14 @@ func _on_reply_chosen(reply_num: int) -> void:
 				next_dialogue(current_dialogue_dict['data'][search_node], search_node)
 				found_next_dialogue = true
 				break
+
+func _on_dbox_btn_pressed() -> void:
+	print('dialogue over button pressed')
+	if not current_dialogue_box.does_have_replies():
+		if is_done:
+			unload_scene()
+		else:
+			var tmp_node_id = has_connecting_dialogue(current_dialogue_node)
+			if tmp_node_id != 'None':
+				next_dialogue(current_dialogue_dict['data'][tmp_node_id], tmp_node_id)
+				current_dialogue_node = tmp_node_id

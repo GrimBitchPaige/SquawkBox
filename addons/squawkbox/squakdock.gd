@@ -13,6 +13,7 @@ extends Control
 @onready var import_unsaved_changes : ConfirmationDialog = $ImportUnsavedChangesConfirmation
 @onready var unsaved_changes_ind : Label = $GraphEdit/TopHBox/HBoxLeft/UnsavedChangesInd
 @onready var character_manager_dialogue : Node = $CharacterManager
+#@onready var condition_builder : Node = $ConditionBuilder
 #region SceneNameEditPanel
 @onready var sn_edit_popup : Control = $GraphEdit/EditSceneNamePopup
 @onready var sn_edit_panel : Panel = $GraphEdit/EditSceneNamePopup/EditSceneNamePanel
@@ -21,11 +22,14 @@ extends Control
 @onready var sn_close_btn : Button = $GraphEdit/EditSceneNamePopup/VBoxContainer/HBoxContainer/CloseSceneNameBtn
 #endregion
 
-var click_pos : Vector2
 const dialogue_node : PackedScene = preload("res://addons/squawkbox/dialogue_node.tscn")
+const conditions_node : PackedScene = preload("res://addons/squawkbox/condition_builder.tscn")
+
+var click_pos : Vector2
 var character_list : Array[StringName]
 var character_portraits : Dictionary
 var dialogue_nodes : Array[Node]
+var conditions_nodes : Array[Node]
 var temp_json_save_str : String
 var has_unsaved_changes : bool = false
 var is_loading_nodes : bool = false
@@ -40,6 +44,12 @@ func _ready() -> void:
 	import_unsaved_changes.add_button("Save and Load", false, "save_and_load")
 	import_unsaved_changes.custom_action.connect(_save_changes_load)
 	character_manager_dialogue.editor_closed.connect(_on_char_editor_closed)
+	await get_tree().create_timer(0.5).timeout
+	var tmp_character_list : Dictionary = character_manager_dialogue.get_character_list()
+	for keys in tmp_character_list:
+		character_portraits.merge(tmp_character_list[keys])
+	for char_name in character_portraits.keys():
+		character_list.append(char_name)
 	#edit_btn.set_modulate(Color.AQUAMARINE)
 
 func _enter_tree() -> void:
@@ -135,10 +145,10 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 		temp.call_deferred("generate_uuid")
 		temp.node_delete.connect(_on_node_deleted)
 		temp.dragged.connect(_on_node_offset_changed)
+		temp.open_condition_builder.connect(_on_condition_builder_called)
 		dialogue_nodes.append(temp)
 		temp.call_deferred("set_node_number", (dialogue_nodes.size() - 1))
 		graph.add_child(temp)
-
 
 func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	graph.connect_node(from_node, from_port, to_node, to_port)
@@ -310,3 +320,19 @@ func _on_char_editor_closed(saved_chars: Dictionary) -> void:
 			character_portraits.merge(saved_chars[keys])
 		for char_name in character_portraits.keys():
 			character_list.append(char_name)
+
+func _on_condition_builder_called(char_name_in: String, node_id_in: String, reply_num_in: int) -> void:
+	var already_exists : bool = false
+	for cond in conditions_nodes:
+		if node_id_in == cond.get_identifiers()[0] and reply_num_in == cond.get_identifiers()[1]:
+			already_exists = true
+			cond.visible = true
+			break
+	if not already_exists:
+		var condition_n : Node = conditions_node.instantiate()
+		condition_n.call_deferred("set_label_text",char_name_in, node_id_in, reply_num_in)
+		conditions_nodes.append(condition_n)
+		add_child(condition_n)
+	#if not condition_builder.visible:
+		#condition_builder.set_label_text(char_name_in, node_id_in, reply_num_in)
+		#condition_builder.visible = true

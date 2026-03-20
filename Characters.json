@@ -1,11 +1,8 @@
 {
 	"0": {
-		"Trashy": "res://addons/squawkbox/delete.png"
+		"Helena": "res://addons/squawkbox/default_character_portrait.png"
 	},
 	"1": {
-		"Plumbo": "res://addons/squawkbox/default_character_portrait.png"
-	},
-	"2": {
 		"Sappho": "res://addons/squawkbox/Lesbian_pride_flag_2018.svg"
 	}
 }
