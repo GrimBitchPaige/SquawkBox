@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [autoload]
 
 SquawkBoxManager="*uid://ci62dw0jlo176"
+StoredVariables="*uid://bu51j7h8sviv"
 
 [editor_plugins]
 

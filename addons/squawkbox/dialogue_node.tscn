@@ -78,6 +78,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter dialogue text"
 wrap_mode = 1
+tab_input_mode = false
 scroll_fit_content_height = true
 
 [connection signal="item_selected" from="HBoxContainer/CharacterSelect" to="." method="_on_character_select_item_selected"]

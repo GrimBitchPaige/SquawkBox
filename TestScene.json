@@ -1,0 +1,151 @@
+{
+	"SceneName": "TestScene",
+	"data": {
+		"69103401861037017743": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 260.0,
+			"PositionY": 240.0,
+			"Dialogue": "Would you like healing?",
+			"ReplyOptions": {
+				"0": {
+					"label": "Reply 1:",
+					"text": "no thanks"
+				},
+				"1": {
+					"label": "Reply 2:",
+					"text": "yes please"
+				}
+			}
+		},
+		"50047327821402471901": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 780.0,
+			"PositionY": 140.0,
+			"Dialogue": "ok, off you go!",
+			"ReplyOptions": {
+
+			}
+		},
+		"20255214325289282172": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 820.0,
+			"PositionY": 420.0,
+			"Dialogue": "you're healed!",
+			"ReplyOptions": {
+				"0": {
+					"label": "Reply 1:",
+					"text": "thanks, bye"
+				},
+				"1": {
+					"label": "Reply 2:",
+					"text": "off to the goblin camp!"
+				}
+			}
+		},
+		"12677392731954854502": {
+			"Character": "Helena",
+			"Portrait": "res://addons/squawkbox/default_character_portrait.png",
+			"PositionX": 1340.0,
+			"PositionY": 300.0,
+			"Dialogue": "bye!",
+			"ReplyOptions": {
+
+			}
+		}
+	},
+	"connections": {
+		"Connection_1": {
+			"from_node": "69103401861037017743",
+			"from_port": 1,
+			"to_node": "50047327821402471901",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_2": {
+			"from_node": "69103401861037017743",
+			"from_port": 2,
+			"to_node": "20255214325289282172",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_3": {
+			"from_node": "20255214325289282172",
+			"from_port": 1,
+			"to_node": "12677392731954854502",
+			"to_port": 0,
+			"keep_alive": false
+		},
+		"Connection_4": {
+			"from_node": "20255214325289282172",
+			"from_port": 2,
+			"to_node": "12677392731954854502",
+			"to_port": 0,
+			"keep_alive": false
+		}
+	},
+	"conditions": {
+		"69103401861037017743": {
+			"1": {
+				"condition_0": {
+					"token_0": {
+						"type": "value",
+						"value": "player.hp"
+					},
+					"token_1": {
+						"type": "compare",
+						"value": ">"
+					},
+					"token_2": {
+						"type": "value",
+						"value": "20"
+					},
+					"token_3": {
+						"type": "op",
+						"value": "THEN"
+					},
+					"token_4": {
+						"type": "status",
+						"value": "HIDDEN"
+					},
+					"token_5": {
+						"type": "op",
+						"value": "END"
+					}
+				}
+			}
+		},
+		"20255214325289282172": {
+			"1": {
+				"condition_0": {
+					"token_0": {
+						"type": "value",
+						"value": "quest.goblin_camp"
+					},
+					"token_1": {
+						"type": "compare",
+						"value": "IS"
+					},
+					"token_2": {
+						"type": "value",
+						"value": "complete"
+					},
+					"token_3": {
+						"type": "op",
+						"value": "THEN"
+					},
+					"token_4": {
+						"type": "status",
+						"value": "LOCKED"
+					},
+					"token_5": {
+						"type": "op",
+						"value": "END"
+					}
+				}
+			}
+		}
+	}
+}

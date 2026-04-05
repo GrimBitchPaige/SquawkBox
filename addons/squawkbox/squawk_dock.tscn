@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://e4j8dm1ug335"]
 
-[ext_resource type="Script" uid="uid://cpe8upq6v8m5b" path="res://addons/squawkbox/squakdock.gd" id="1_e8pe8"]
+[ext_resource type="Script" uid="uid://cpe8upq6v8m5b" path="res://addons/squawkbox/squawk_dock.gd" id="1_e8pe8"]
 [ext_resource type="Texture2D" uid="uid://sjd1dnxa5dl" path="res://addons/squawkbox/edit_icon.svg" id="2_1k12t"]
 [ext_resource type="PackedScene" uid="uid://d3jcule0d5n2t" path="res://addons/squawkbox/character_manager.tscn" id="3_uo4p7"]
 

@@ -54,4 +54,6 @@ transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, -0.0032464087, -4.32
 
 [node name="DialogueDetectArea" parent="." unique_id=901488608 instance=ExtResource("4_coq8p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.9427228)
-scene_name = &"TestNewDesign"
+scene_name = &"TestScene"
+repeatable = true
+debug_mode = true

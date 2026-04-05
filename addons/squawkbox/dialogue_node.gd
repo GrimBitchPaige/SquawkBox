@@ -59,6 +59,7 @@ func _on_add_reply_option_btn_pressed() -> void:
 	reply_text.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	reply_text.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
 	reply_text.scroll_fit_content_height = true
+	reply_text.tab_input_mode = false
 	var reply_hbox : HBoxContainer = HBoxContainer.new()
 	reply_hbox.custom_minimum_size.y = 50.0
 	reply_hbox.add_child(reply_del_btn)
