@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://boi7y4coxtlne"]
+
+[ext_resource type="Script" uid="uid://b10vn2mfphjs7" path="res://addons/squawkbox/dialogue_debug_view.gd" id="1_j8pyn"]
+
+[node name="DialogueDebugView" type="Control" unique_id=585861388]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j8pyn")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1656858271]
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 189.0
+
+[node name="DebugVarsVBox" type="VBoxContainer" parent="PanelContainer" unique_id=1000917096]
+layout_mode = 2

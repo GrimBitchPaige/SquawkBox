@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bhav27tao2qx3"]
+
+[ext_resource type="Script" uid="uid://046wyouw3jay" path="res://addons/squawkbox/add_character_interface.gd" id="1_eqvxy"]
+[ext_resource type="Texture2D" uid="uid://cdfba1j7lyyp" path="res://addons/squawkbox/close_icon.svg" id="2_chk0n"]
+
+[node name="AddCharacterInterface" type="Control" unique_id=1297636200]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+script = ExtResource("1_eqvxy")
+
+[node name="Panel" type="Panel" parent="." unique_id=2132871001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1043335186]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=320284381]
+layout_mode = 2
+
+[node name="Portrait" type="TextureRect" parent="VBoxContainer/HBoxContainer" unique_id=1085925323]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterName" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=1886812858]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1703385746]
+layout_mode = 2
+
+[node name="AddPortraitBtn" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=1347625405]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add Portrait"
+
+[node name="AddCharacterBtn" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=1663384311]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Add Character"
+
+[node name="CloseBtn" type="TextureButton" parent="VBoxContainer/HBoxContainer2" unique_id=964614698]
+custom_minimum_size = Vector2(31, 31)
+layout_mode = 2
+texture_normal = ExtResource("2_chk0n")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1214163940]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 4
+file_mode = 0
+
+[node name="MissingFieldPopup" type="AcceptDialog" parent="." unique_id=943046138]
+oversampling_override = 1.0
+initial_position = 4
+ok_button_text = "Ooops!"
+
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/CharacterName" to="." method="_on_character_name_text_changed"]
+[connection signal="text_submitted" from="VBoxContainer/HBoxContainer/CharacterName" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/AddPortraitBtn" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/AddCharacterBtn" to="." method="_on_add_character_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CloseBtn" to="." method="_on_close_btn_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

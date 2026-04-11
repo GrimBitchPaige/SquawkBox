@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://p4flisoa1a6x"]
+
+[ext_resource type="Script" uid="uid://cp04f565q8deg" path="res://addons/squawkbox/condition_builder.gd" id="1_bnkuw"]
+[ext_resource type="Texture2D" uid="uid://cdfba1j7lyyp" path="res://addons/squawkbox/close_icon.svg" id="2_1a8un"]
+
+[node name="ConditionBuilder" type="Control" unique_id=689395408]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -247.0
+offset_right = 256.0
+offset_bottom = 287.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bnkuw")
+
+[node name="Panel" type="Panel" parent="." unique_id=830867082]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2126110881]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1226738115]
+layout_mode = 2
+
+[node name="NodeLbl" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=232510779]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Node: {char name and node id}"
+horizontal_alignment = 1
+
+[node name="ReplyLbl" type="Label" parent="VBoxContainer/HBoxContainer2" unique_id=1547663815]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Reply: {reply number}"
+
+[node name="CloseBtn" type="TextureButton" parent="VBoxContainer/HBoxContainer2" unique_id=209028348]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture_normal = ExtResource("2_1a8un")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1114821520]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer" unique_id=1621495059]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="ConditionTokensVBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/ScrollContainer" unique_id=1608534457]
+layout_mode = 2
+
+[node name="EqualBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1894850565]
+layout_mode = 2
+text = "=="
+
+[node name="LessThanBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1196818643]
+layout_mode = 2
+text = "<"
+
+[node name="GreaterThanBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1692474473]
+layout_mode = 2
+text = ">"
+
+[node name="LessThanEqualBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=261271265]
+layout_mode = 2
+text = "<="
+
+[node name="GreaterThanEqualBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1615126791]
+layout_mode = 2
+text = ">="
+
+[node name="ValueBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=780172319]
+layout_mode = 2
+text = "Value"
+
+[node name="OrBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=95290519]
+layout_mode = 2
+text = "OR"
+
+[node name="AndBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=2084674157]
+layout_mode = 2
+text = "AND"
+
+[node name="ThenBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=2078818149]
+layout_mode = 2
+text = "THEN"
+
+[node name="ShowBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=579918131]
+layout_mode = 2
+text = "SHOW"
+
+[node name="HiddenBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1501529958]
+layout_mode = 2
+text = "HIDDEN"
+
+[node name="LockedBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1216421343]
+layout_mode = 2
+text = "LOCKED"
+
+[node name="IsBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=49875505]
+layout_mode = 2
+text = "IS"
+
+[node name="EndStatementBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1329948017]
+layout_mode = 2
+text = "END"
+
+[node name="LeftClosureBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=1101175467]
+layout_mode = 2
+text = "("
+
+[node name="RightClosureBtn" type="Button" parent="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox" unique_id=373020830]
+layout_mode = 2
+text = ")"
+
+[node name="ConditionHolderVBox" type="VBoxContainer" parent="VBoxContainer/HBoxContainer" unique_id=1460165287]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/CloseBtn" to="." method="_on_close_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/EqualBtn" to="." method="_on_equal_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/LessThanBtn" to="." method="_on_less_than_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/GreaterThanBtn" to="." method="_on_greater_than_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/LessThanEqualBtn" to="." method="_on_less_than_equal_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/GreaterThanEqualBtn" to="." method="_on_greater_than_equal_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/ValueBtn" to="." method="_on_value_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/OrBtn" to="." method="_on_or_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/AndBtn" to="." method="_on_and_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/ThenBtn" to="." method="_on_then_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/ShowBtn" to="." method="_on_show_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/HiddenBtn" to="." method="_on_hidden_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/LockedBtn" to="." method="_on_locked_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/IsBtn" to="." method="_on_is_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/EndStatementBtn" to="." method="_on_end_statement_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/LeftClosureBtn" to="." method="_on_left_closure_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ScrollContainer/ConditionTokensVBox/RightClosureBtn" to="." method="_on_right_closure_btn_pressed"]

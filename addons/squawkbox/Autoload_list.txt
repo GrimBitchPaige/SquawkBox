@@ -1,0 +1,2 @@
+squawk_manager.gd
+stored_variables.gd

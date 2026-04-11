@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://btnlcpsb2ah2c"]
+
+[ext_resource type="Script" uid="uid://dvbfjvyg55ohn" path="res://addons/squawkbox/reply_variable.gd" id="1_58vmu"]
+[ext_resource type="Texture2D" uid="uid://y623ys31n7vk" path="res://addons/squawkbox/delete.png" id="1_fdaka"]
+[ext_resource type="Texture2D" uid="uid://b6nv56sovsn68" path="res://addons/squawkbox/add_slot_icon.svg" id="3_a4wjl"]
+
+[node name="ReplyVariable" type="HBoxContainer" unique_id=1806292582]
+custom_minimum_size = Vector2(500, 30)
+offset_right = 500.0
+offset_bottom = 30.0
+script = ExtResource("1_58vmu")
+
+[node name="VariableName" type="LineEdit" parent="." unique_id=1698641892]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModifierOptions" type="OptionButton" parent="." unique_id=881302195]
+layout_mode = 2
+item_count = 4
+popup/item_0/text = "<"
+popup/item_0/id = 0
+popup/item_1/text = ">"
+popup/item_1/id = 1
+popup/item_2/text = "="
+popup/item_2/id = 2
+popup/item_3/text = "boolean"
+popup/item_3/id = 3
+
+[node name="VariableValue" type="LineEdit" parent="." unique_id=2091351178]
+layout_mode = 2
+
+[node name="ResultOptions" type="OptionButton" parent="." unique_id=1989190862]
+layout_mode = 2
+item_count = 1
+popup/item_0/text = "Don't show"
+popup/item_0/id = 0
+
+[node name="DeleteBtn" type="TextureButton" parent="." unique_id=368940725]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture_normal = ExtResource("1_fdaka")
+texture_pressed = ExtResource("3_a4wjl")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="text_changed" from="VariableName" to="." method="_on_variable_name_text_changed"]
+[connection signal="text_submitted" from="VariableName" to="." method="_on_variable_name_text_submitted"]
+[connection signal="item_selected" from="ResultOptions" to="." method="_on_result_options_item_selected"]
+[connection signal="pressed" from="DeleteBtn" to="." method="_on_delete_btn_pressed"]

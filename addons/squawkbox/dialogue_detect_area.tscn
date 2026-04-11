@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://2xva0fnmfnma"]
+
+[ext_resource type="Script" uid="uid://c04p6sudhlad1" path="res://addons/squawkbox/dialogue_detect_area.gd" id="1_3ebu6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1ormd"]
+size = Vector3(2.5456543, 2.078247, 1.5639648)
+
+[node name="DialogueDetectArea" type="Area3D" unique_id=901488608]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("1_3ebu6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=575216302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07409668, 0.53912354, -0.28198242)
+shape = SubResource("BoxShape3D_1ormd")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

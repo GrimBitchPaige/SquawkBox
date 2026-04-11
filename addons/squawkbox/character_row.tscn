@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://lbicovx3s4qg"]
+
+[ext_resource type="Texture2D" uid="uid://bips3lfl5xvav" path="res://addons/squawkbox/player.png" id="1_7nw7h"]
+[ext_resource type="Script" uid="uid://dt7gnxjckkbug" path="res://addons/squawkbox/character_row.gd" id="1_wvncs"]
+[ext_resource type="Texture2D" uid="uid://sjd1dnxa5dl" path="res://addons/squawkbox/edit_icon.svg" id="2_0bo2v"]
+
+[node name="CharacterRow" type="Control" unique_id=66637528]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -35.0
+offset_right = 192.0
+offset_bottom = 35.0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_wvncs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=941040781]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterPortrait" type="TextureRect" parent="HBoxContainer" unique_id=1850434998]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture = ExtResource("1_7nw7h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CharacterName" type="Label" parent="HBoxContainer" unique_id=233515495]
+layout_mode = 2
+text = "Test"
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer" unique_id=867931879]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer" unique_id=549705113]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture_normal = ExtResource("2_0bo2v")
+ignore_texture_size = true
+stretch_mode = 5

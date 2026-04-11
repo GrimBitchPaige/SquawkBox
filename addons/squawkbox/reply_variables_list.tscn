@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://b3l8wvksw1g5w"]
+
+[ext_resource type="Script" uid="uid://ctjhsgpbhyi75" path="res://addons/squawkbox/reply_variables_list.gd" id="1_qpupa"]
+[ext_resource type="Texture2D" uid="uid://b6nv56sovsn68" path="res://addons/squawkbox/add_slot_icon.svg" id="2_m4lfj"]
+
+[node name="ReplyVariablesList" type="Control" unique_id=1435605705]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 400.0
+script = ExtResource("1_qpupa")
+
+[node name="Panel" type="Panel" parent="." unique_id=1861809402]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=833879500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=460069375]
+layout_mode = 2
+
+[node name="AddVariableBtn" type="TextureButton" parent="VBoxContainer/HBoxContainer" unique_id=1218695222]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture_normal = ExtResource("2_m4lfj")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ReplyNumLbl" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=129458546]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddVariableBtn" to="." method="_on_add_variable_btn_pressed"]
