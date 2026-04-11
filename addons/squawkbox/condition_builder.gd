@@ -219,6 +219,16 @@ func _on_condition_statement_delete_pressed(statement_number: int) -> void:
 	condition_statements[statement_number].queue_free()
 	condition_statements.remove_at(statement_number)
 
+	var conditions_iter : int = 0
+	for condition in condition_statements:
+		print('checking conditions after removal of %d' % statement_number)
+		for child in condition.get_child(0).get_children():
+			if child is TextureButton:
+				print('rebinding condition delete with correct number')
+				child.pressed.disconnect(_on_condition_statement_delete_pressed)
+				child.pressed.connect(_on_condition_statement_delete_pressed.bind(conditions_iter))
+		conditions_iter += 1
+
 func _on_is_btn_pressed() -> void:
 	add_op('IS')
 
